@@ -50,7 +50,7 @@ source: "github.com/greendrop/agent-skills"
 
       詳細（不要なら省略）
 
-      Co-Authored-By: Claude <noreply@anthropic.com>
+      Co-Authored-By: <AI ツール名とモデル名> <メールアドレス>
       EOF
       )"
       ```
@@ -64,6 +64,16 @@ source: "github.com/greendrop/agent-skills"
 ### コミットメッセージの形式
 
 **Conventional Commits** 形式を使用する:
+
+**Co-Authored-By の設定:**
+使用中の AI ツール・モデルを自身のコンテキストから判断し、適切な形式で設定する。
+
+| AI ツール | Co-Authored-By の例 |
+|----------|---------------------|
+| Claude Code (Sonnet 4.6) | `Claude Sonnet 4.6 <noreply@anthropic.com>` |
+| Claude Code (Opus 4.7) | `Claude Opus 4.7 <noreply@anthropic.com>` |
+| GitHub Copilot CLI | `GitHub Copilot <copilot@github.com>` |
+| その他 | `<ツール名> <公式メールアドレスまたは noreply>` |
 
 ```
 <type>(<scope>): <subject>
