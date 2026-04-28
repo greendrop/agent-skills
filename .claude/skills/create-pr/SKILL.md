@@ -41,11 +41,20 @@ source: "github.com/greendrop/agent-skills"
 
 4. **PR を作成する**
 
+   **署名の設定:**
+   使用中の AI ツール・モデルを自身のコンテキストから判断し、適切な形式で設定する。
+
+   | AI ツール | 署名の例 |
+   |----------|---------|
+   | Claude Code | `🤖 Generated with [Claude Code](https://claude.com/claude-code)` |
+   | GitHub Copilot CLI | `🤖 Generated with GitHub Copilot` |
+   | その他 | `🤖 Generated with <ツール名>` |
+
    ```bash
    gh pr create --draft --title "<タイトル>" --body "$(cat <<'EOF'
    <テンプレートの構成に従って埋めた本文>
 
-   🤖 Generated with [Claude Code](https://claude.com/claude-code)
+   🤖 Generated with <AI ツール名>
    EOF
    )"
    ```
