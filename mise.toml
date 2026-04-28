@@ -3,3 +3,11 @@ actionlint = "1.7.12"
 gh = "2.92.0"
 ghalint = "1.5.5"
 yq = "4.53.2"
+
+[tasks."skills:validate"]
+run = "scripts/validate-skills.sh"
+description = "Validate all SKILL.md files"
+
+[tasks."skills:validate:one"]
+run = "scripts/validate-skills.sh {{arg(name='path')}}"
+description = "Validate a single SKILL.md (e.g. mise run skills:validate:one path/to/SKILL.md)"
