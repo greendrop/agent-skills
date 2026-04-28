@@ -1,0 +1,94 @@
+---
+name: Skill Validate
+
+on:
+  pull_request:
+    paths:
+      - "*/SKILL.md"
+      - "scripts/validate-skills.sh"
+      - "mise.toml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+
+      - name: Validate skills
+        run: mise run skills:validate
+
+      - name: Check version updated for modified SKILL.md files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          # GitHub API で PR の変更ファイル一覧を取得し、SKILL.md のみ抽出する。
+          # jq で "status filename" 形式の文字列にまとめて配列に格納する。
+          # git fetch が不要で、リモートの内容も API 経由で取得できる。
+          mapfile -t skill_entries < <(
+            gh api "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" \
+              --paginate \
+              --jq '.[] | select(.filename | test("SKILL.md$")) | "\(.status) \(.filename)"'
+          )
+
+          if [[ ${#skill_entries[@]} -eq 0 ]]; then
+            echo "No SKILL.md files changed."
+            exit 0
+          fi
+
+          failed=0
+          for entry in "${skill_entries[@]}"; do
+            # "status filename" 形式から各フィールドを取り出す
+            status="${entry%% *}"
+            file="${entry#* }"
+
+            # .claude/ と .github/ 配下は管理外スキルのためスキップ
+            [[ "$file" == .claude/* ]] && continue
+            [[ "$file" == .github/* ]] && continue
+
+            # 新規追加ファイルは比較元が存在しないためスキップ
+            if [[ "$status" == "added" ]]; then
+              echo "New file: $file (skipping version check)"
+              continue
+            fi
+
+            # base ブランチのファイル内容を GitHub API で取得し base64 デコード後、
+            # awk で YAML frontmatter (--- ブロック) だけを抽出して version フィールドを読む
+            base_version=$(
+              gh api "repos/${{ github.repository }}/contents/$file?ref=${{ github.event.pull_request.base.sha }}" \
+                --jq '.content' | base64 -d \
+              | awk 'NR==1&&/^---$/{f=1;next}f&&/^---$/{exit}f{print}' \
+              | yq '.version // ""'
+            )
+
+            # 作業ツリーの現在のファイルから同様に version を取得する
+            current_version=$(
+              awk 'NR==1&&/^---$/{f=1;next}f&&/^---$/{exit}f{print}' "$file" \
+              | yq '.version // ""'
+            )
+
+            # version が更新されていない場合はエラー、更新されていれば成功とする
+            if [[ "$base_version" == "$current_version" ]]; then
+              echo "ERROR: version not updated in $file (still: $current_version)"
+              ((failed++)) || true
+            else
+              echo "OK: $file version bumped ($base_version -> $current_version)"
+            fi
+          done
+
+          [[ $failed -eq 0 ]]
