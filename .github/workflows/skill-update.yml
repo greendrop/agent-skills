@@ -1,0 +1,113 @@
+---
+name: Skill Update
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Monday 09:00 JST (Sunday 00:00 UTC)
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+
+      - name: Update skills
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh skill update --all
+
+      - name: Check for changes
+        id: diff
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate GitHub App token
+        if: steps.diff.outputs.changed == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          app-id: ${{ secrets.GH_APPS_CREATE_PULL_REQEST_BOT_APP_ID }}
+          private-key: ${{ secrets.GH_APPS_CREATE_PULL_REQEST_BOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Commit and push branch
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+
+          branch="skill-update/auto"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$branch"
+          git add -A
+          git commit -m "chore(skills): gh skill update --all を実行"
+
+          remote_url="https://x-access-token:${APP_TOKEN}@github.com/${{ github.repository }}.git"
+          git push "$remote_url" "${branch}:${branch}" --force-with-lease
+
+      - name: Create or update PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_BODY: |
+            ## 概要
+
+            `gh skill update --all` を実行してスキルを最新バージョンに自動更新しました。
+
+            ## 変更内容
+
+            - 各スキルの `version` および `metadata` フィールドを最新版に更新
+
+            ## 確認手順
+
+            - [ ] 各 SKILL.md のバージョン差分が意図したものか確認する
+            - [ ] 動作確認が必要なスキルについてローカルでテストする
+        run: |
+          set -euo pipefail
+
+          branch="skill-update/auto"
+
+          existing_pr=$(
+            gh pr list \
+              --head "$branch" \
+              --state open \
+              --json number \
+              --jq '.[0].number // ""'
+          )
+
+          if [[ -n "$existing_pr" ]]; then
+            echo "PR #${existing_pr} already exists for ${branch}; branch updated via force-with-lease."
+          else
+            gh pr create \
+              --title "chore(skills): gh skill update --all を実行" \
+              --body "$PR_BODY" \
+              --head "$branch" \
+              --base main
+          fi
