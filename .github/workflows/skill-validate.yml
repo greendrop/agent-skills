@@ -5,6 +5,9 @@ on:
   pull_request:
     paths:
       - "*/SKILL.md"
+      - "!.claude/**"
+      - "!.copilot/**"
+      - "!.agents/**"
       - "scripts/validate-skills.sh"
       - "mise.toml"
 
@@ -57,9 +60,10 @@ jobs:
             status="${entry%% *}"
             file="${entry#* }"
 
-            # .claude/ と .github/ 配下は管理外スキルのためスキップ
+            # 特定配下は管理外スキルのためスキップ
             [[ "$file" == .claude/* ]] && continue
-            [[ "$file" == .github/* ]] && continue
+            [[ "$file" == .copilot/* ]] && continue
+            [[ "$file" == .agents/* ]] && continue
 
             # 新規追加ファイルは比較元が存在しないためスキップ
             if [[ "$status" == "added" ]]; then
