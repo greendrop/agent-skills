@@ -1,0 +1,52 @@
+---
+name: Skill Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*/SKILL.md"
+      - "!.claude/**"
+      - "!.copilot/**"
+      - "!.agents/**"
+      - "!.github/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+
+      - name: Publish skills
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          # 当日分の CalVer タグを自動採番する（例: v2026.04.29.1）
+          today=$(date -u +%Y.%m.%d)
+          escaped_today="${today//./\\.}"
+          last_n=$(
+            gh api "repos/${{ github.repository }}/tags" --paginate \
+              --jq "[.[] | select(.name | test(\"^v${escaped_today}\\\\.\\\\d+$\")) | .name | split(\".\")[-1] | tonumber] | max // 0"
+          )
+          next_n=$((last_n + 1))
+          tag="v${today}.${next_n}"
+
+          echo "Publishing: $tag"
+          gh skill publish --tag "$tag"
+          echo "Published: $tag"
