@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "github-actions",
+    "mise"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "* 9 * * *"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "github-actions": {
+    "enabled": true
+  },
+  "mise": {
+    "enabled": true
+  },
+  "packageRules": [],
+  "rebaseWhen": "never"
+}
