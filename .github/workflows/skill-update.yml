@@ -76,6 +76,19 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_BODY: |
+            ## 概要
+
+            `gh skill update --all` を実行してスキルを最新バージョンに自動更新しました。
+
+            ## 変更内容
+
+            - 各スキルの `version` および `metadata` フィールドを最新版に更新
+
+            ## 確認手順
+
+            - [ ] 各 SKILL.md のバージョン差分が意図したものか確認する
+            - [ ] 動作確認が必要なスキルについてローカルでテストする
         run: |
           set -euo pipefail
 
@@ -94,21 +107,7 @@ jobs:
           else
             gh pr create \
               --title "chore(skills): gh skill update --all を実行" \
-              --body "$(cat <<'EOF'
-## 概要
-
-`gh skill update --all` を実行してスキルを最新バージョンに自動更新しました。
-
-## 変更内容
-
-- 各スキルの `version` および `metadata` フィールドを最新版に更新
-
-## 確認手順
-
-- [ ] 各 SKILL.md のバージョン差分が意図したものか確認する
-- [ ] 動作確認が必要なスキルについてローカルでテストする
-EOF
-)" \
+              --body "$PR_BODY" \
               --head "$branch" \
               --base main
           fi
