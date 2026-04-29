@@ -39,10 +39,9 @@ jobs:
 
           # 当日分の CalVer タグを自動採番する（例: v2026.04.29.1）
           today=$(date -u +%Y.%m.%d)
-          escaped_today="${today//./\\.}"
           last_n=$(
             gh api "repos/${{ github.repository }}/tags" --paginate \
-              --jq "[.[] | select(.name | test(\"^v${escaped_today}\\\\.\\\\d+$\")) | .name | split(\".\")[-1] | tonumber] | max // 0"
+              --jq "[.[] | select(.name | startswith(\"v${today}.\")) | .name | split(\".\")[-1] | tonumber] | max // 0"
           )
           next_n=$((last_n + 1))
           tag="v${today}.${next_n}"
