@@ -37,7 +37,7 @@ jobs:
           set -euo pipefail
 
           # 当日分の CalVer タグを自動採番する（例: v2026.04.29.1）
-          today=$(date -u +%Y.%m.%d)
+          today=$(TZ=Asia/Tokyo date +%Y.%m.%d)
           last_n=$(
             gh api "repos/${{ github.repository }}/tags" --paginate \
               --jq "[.[] | select(.name | startswith(\"v${today}.\")) | .name | split(\".\")[-1] | tonumber] | max // 0"
