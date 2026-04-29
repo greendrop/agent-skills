@@ -1,10 +1,14 @@
 ---
-name: create-pr
 description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
-version: "2026.04.29.1"
-source: "github.com/greendrop/agent-skills"
+metadata:
+    github-path: create-pr
+    github-ref: refs/tags/v2026.04.29.1
+    github-repo: https://github.com/greendrop/agent-skills
+    github-tree-sha: 26e59b6691bd8a570a7a50332338d6f9211c2c8a
+name: create-pr
+source: github.com/greendrop/agent-skills
+version: 2026.04.29.1
 ---
-
 `general-purpose` サブエージェントを起動し、以下の「サブエージェントへのプロンプト」セクションの内容をそのままプロンプトとして渡して実行させてください。サブエージェントの実行結果をユーザーに表示してください。
 
 ---
