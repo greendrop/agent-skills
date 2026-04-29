@@ -1,7 +1,7 @@
 ---
 name: commit
 description: 変更を確認し、意味のある単位に分けて Conventional Commits 形式でコミットを作成する
-version: "2026.04.29.2"
+version: "2026.04.29.3"
 source: "github.com/greendrop/agent-skills"
 ---
 
