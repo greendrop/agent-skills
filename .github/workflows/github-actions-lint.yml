@@ -32,3 +32,8 @@ jobs:
 
       - name: Run ghalint
         run: ghalint run
+
+      - name: Run zizmor
+        run: zizmor --gh-token "$GH_TOKEN" .
+        env:
+          GH_TOKEN: ${{ github.token }}
