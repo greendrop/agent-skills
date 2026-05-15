@@ -65,9 +65,9 @@ jobs:
             [[ "$file" == .copilot/* ]] && continue
             [[ "$file" == .agents/* ]] && continue
 
-            # 新規追加ファイルは比較元が存在しないためスキップ
-            if [[ "$status" == "added" ]]; then
-              echo "New file: $file (skipping version check)"
+            # 新規追加・リネームされたファイルは比較元が存在しないためスキップ
+            if [[ "$status" == "added" || "$status" == "renamed" ]]; then
+              echo "New/renamed file: $file (skipping version check)"
               continue
             fi
 
