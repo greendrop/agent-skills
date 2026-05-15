@@ -27,7 +27,7 @@ gh skill update --all
 mise run skills:validate
 
 # 特定の SKILL.md を検証する
-mise run skills:validate:one commit/SKILL.md
+mise run skills:validate:one greendrop-git-conventional-commit/SKILL.md
 ```
 
 ### 新しいスキルの追加
