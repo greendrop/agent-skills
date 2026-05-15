@@ -1,13 +1,13 @@
 ---
 description: 変更を確認し、意味のある単位に分けて Conventional Commits 形式でコミットを作成する
 metadata:
-    github-path: commit
-    github-ref: refs/tags/v2026.04.29.2
+    github-path: greendrop-git-conventional-commit
+    github-ref: refs/tags/v2026.05.15.1
     github-repo: https://github.com/greendrop/agent-skills
-    github-tree-sha: 9d77abd122c1fc3e4e98b7344a7ddab7bf1d05af
-name: commit
+    github-tree-sha: 430a817efa1f1591a3f1dc4fec6be653883c99e3
+name: greendrop-git-conventional-commit
 source: github.com/greendrop/agent-skills
-version: 2026.04.30.1
+version: 2026.05.15.1
 ---
 `general-purpose` サブエージェントを起動し、以下の「サブエージェントへのプロンプト」セクションの内容をそのままプロンプトとして渡して実行させてください。サブエージェントの実行結果をユーザーに表示してください。
 
