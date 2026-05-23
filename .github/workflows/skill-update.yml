@@ -48,8 +48,8 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         with:
-          app-id: ${{ secrets.GH_APPS_CREATE_PULL_REQEST_BOT_APP_ID }}
-          private-key: ${{ secrets.GH_APPS_CREATE_PULL_REQEST_BOT_PRIVATE_KEY }}
+          client-id: ${{ secrets.GH_APPS_PULL_REQUEST_CREATE_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APPS_PULL_REQUEST_CREATE_PRIVATE_KEY }}
           permission-contents: write
           permission-pull-requests: write
 
