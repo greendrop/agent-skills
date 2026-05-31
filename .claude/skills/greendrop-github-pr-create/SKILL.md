@@ -1,11 +1,11 @@
 ---
 description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
 metadata:
-    github-path: greendrop-github-create-pr
+    github-path: greendrop-github-pr-create
     github-ref: refs/tags/v2026.05.15.1
     github-repo: https://github.com/greendrop/agent-skills
     github-tree-sha: 92087e61404fd6a172ac85d4f64e1c300280e813
-name: greendrop-github-create-pr
+name: greendrop-github-pr-create
 source: github.com/greendrop/agent-skills
 version: 2026.05.15.1
 ---
