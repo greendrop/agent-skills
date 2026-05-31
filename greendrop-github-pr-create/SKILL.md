@@ -1,7 +1,7 @@
 ---
-name: greendrop-github-create-pr
+name: greendrop-github-pr-create
 description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
-version: "2026.05.15.1"
+version: "2026.06.01.1"
 source: "github.com/greendrop/agent-skills"
 ---
 
