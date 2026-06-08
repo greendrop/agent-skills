@@ -2,12 +2,12 @@
 description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
 metadata:
     github-path: greendrop-github-pr-create
-    github-ref: refs/tags/v2026.05.15.1
+    github-ref: refs/tags/v2026.06.01.1
     github-repo: https://github.com/greendrop/agent-skills
-    github-tree-sha: 92087e61404fd6a172ac85d4f64e1c300280e813
+    github-tree-sha: 502a540a566d292b75687c35d53832a8387cf6fb
 name: greendrop-github-pr-create
 source: github.com/greendrop/agent-skills
-version: 2026.05.15.1
+version: 2026.06.01.1
 ---
 `general-purpose` サブエージェントを起動し、以下の「サブエージェントへのプロンプト」セクションの内容をそのままプロンプトとして渡して実行させてください。サブエージェントの実行結果をユーザーに表示してください。
 
