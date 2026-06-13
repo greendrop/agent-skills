@@ -23,12 +23,17 @@ gh skill update --all
 ツール管理には [mise](https://mise.jdx.dev/) を使用する。
 
 ```bash
+# ツールをインストールする（lefthook install も自動実行）
+mise install
+
 # すべての SKILL.md を検証する
 mise run skills:validate
 
 # 特定の SKILL.md を検証する
 mise run skills:validate:one greendrop-git-conventional-commit/SKILL.md
 ```
+
+`mise install` 実行後、[lefthook](https://github.com/evilmartians/lefthook) による Git フックが有効になり、コミット前に [betterleaks](https://github.com/betterleaks/betterleaks) で秘密情報（API キー・パスワード等）が検出される。PR 時にも GitHub Actions（`secret-scan`）で同様のチェックが実行される。
 
 ### 新しいスキルの追加
 

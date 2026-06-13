@@ -56,6 +56,7 @@ source: "github.com/greendrop/agent-skills"
 | `skill-update`        | 毎週月曜 / 手動                    | `gh skill update --all` を実行し PR を作成 |
 | `yamllint`            | PR（YAML ファイル変更時）          | YAML lint                                  |
 | `github-actions-lint` | PR（ワークフロー変更時）           | actionlint + ghalint                       |
+| `secret-scan`         | PR                                 | betterleaks で差分コミットから秘密情報を検出 |
 
 ## スキルの追加・更新手順
 
