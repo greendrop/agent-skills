@@ -18,7 +18,7 @@ mise run skills:validate
 mise run skills:validate:one greendrop-git-conventional-commit/SKILL.md
 
 # YAML ファイルを lint する
-yamllint .
+yamlfmt -lint .
 
 # GitHub Actions ワークフローを lint する
 actionlint -color
@@ -54,7 +54,7 @@ source: "github.com/greendrop/agent-skills"
 | `skill-validate`      | PR（SKILL.md 変更時）              | バリデーション + バージョン更新チェック    |
 | `skill-publish`       | main へのマージ（SKILL.md 変更時） | CalVer タグを採番して `gh skill publish`   |
 | `skill-update`        | 毎週月曜 / 手動                    | `gh skill update --all` を実行し PR を作成 |
-| `yamllint`            | PR（YAML ファイル変更時）          | YAML lint                                  |
+| `yaml-lint`           | PR（YAML ファイル変更時）          | YAML lint（yamlfmt）                       |
 | `github-actions-lint` | PR（ワークフロー変更時）           | actionlint + ghalint                       |
 | `secret-scan`         | PR                                 | betterleaks で差分コミットから秘密情報を検出 |
 
