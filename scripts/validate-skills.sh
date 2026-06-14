@@ -47,10 +47,20 @@ validate_file() {
     errors+=("name: required field is missing or empty")
   elif [[ "$name" != "$dir_name" ]]; then
     errors+=("name: expected '$dir_name' (parent directory name), got '$name'")
+  else
+    local name_len=${#name}
+    if [[ $name_len -gt 64 ]]; then
+      errors+=("name: max 64 characters allowed, got $name_len")
+    fi
   fi
 
   if [[ -z "$description" || "$description" == "null" ]]; then
     errors+=("description: required field is missing or empty")
+  else
+    local desc_len=${#description}
+    if [[ $desc_len -gt 1024 ]]; then
+      errors+=("description: max 1024 characters allowed, got $desc_len")
+    fi
   fi
 
   if [[ -z "$version" || "$version" == "null" ]]; then
