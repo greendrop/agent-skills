@@ -45,9 +45,10 @@ validate_file() {
 
   if [[ -z "$name" || "$name" == "null" ]]; then
     errors+=("name: required field is missing or empty")
-  elif [[ "$name" != "$dir_name" ]]; then
-    errors+=("name: expected '$dir_name' (parent directory name), got '$name'")
   else
+    if [[ "$name" != "$dir_name" ]]; then
+      errors+=("name: expected '$dir_name' (parent directory name), got '$name'")
+    fi
     local name_len=${#name}
     if [[ $name_len -gt 64 ]]; then
       errors+=("name: max 64 characters allowed, got $name_len")
