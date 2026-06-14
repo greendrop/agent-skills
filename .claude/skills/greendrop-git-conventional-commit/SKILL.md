@@ -1,13 +1,13 @@
 ---
-description: 変更を確認し、意味のある単位に分けて Conventional Commits 形式でコミットを作成する
+description: Review changes, split them into meaningful units, and create commits in Conventional Commits format. Use when the user wants to commit changes — e.g. "commit", "コミット", "コミットして", "変更をコミット".
 metadata:
     github-path: greendrop-git-conventional-commit
-    github-ref: refs/tags/v2026.05.15.1
+    github-ref: refs/tags/v2026.06.14.1
     github-repo: https://github.com/greendrop/agent-skills
-    github-tree-sha: 430a817efa1f1591a3f1dc4fec6be653883c99e3
+    github-tree-sha: 5b0cd7169868c369d98f1e8586d40884a847cbc3
 name: greendrop-git-conventional-commit
 source: github.com/greendrop/agent-skills
-version: 2026.05.15.1
+version: 2026.06.14.1
 ---
 `general-purpose` サブエージェントを起動し、以下の「サブエージェントへのプロンプト」セクションの内容をそのままプロンプトとして渡して実行させてください。サブエージェントの実行結果をユーザーに表示してください。
 

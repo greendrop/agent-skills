@@ -1,13 +1,13 @@
 ---
-description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
+description: Review the current branch's changes and create a GitHub Pull Request. Use when the user wants to open a pull request — e.g. "create PR", "PR作成", "プルリクエスト作成", "PRを作って".
 metadata:
     github-path: greendrop-github-pr-create
-    github-ref: refs/tags/v2026.06.01.1
+    github-ref: refs/tags/v2026.06.14.1
     github-repo: https://github.com/greendrop/agent-skills
-    github-tree-sha: 502a540a566d292b75687c35d53832a8387cf6fb
+    github-tree-sha: 46a436f832338a351b6fe73198564794ddc35749
 name: greendrop-github-pr-create
 source: github.com/greendrop/agent-skills
-version: 2026.06.01.1
+version: 2026.06.14.1
 ---
 `general-purpose` サブエージェントを起動し、以下の「サブエージェントへのプロンプト」セクションの内容をそのままプロンプトとして渡して実行させてください。サブエージェントの実行結果をユーザーに表示してください。
 
