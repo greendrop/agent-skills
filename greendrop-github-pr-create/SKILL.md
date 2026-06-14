@@ -1,7 +1,7 @@
 ---
 name: greendrop-github-pr-create
-description: 現在のブランチの変更を確認し、GitHub Pull Request を作成する
-version: "2026.06.01.1"
+description: "Review the current branch's changes and create a GitHub Pull Request. Use when the user wants to open a pull request — e.g. \"create PR\", \"PR作成\", \"プルリクエスト作成\", \"PRを作って\"."
+version: "2026.06.14.1"
 source: "github.com/greendrop/agent-skills"
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: greendrop-git-conventional-commit
-description: 変更を確認し、意味のある単位に分けて Conventional Commits 形式でコミットを作成する
-version: "2026.05.15.1"
+description: "Review changes, split them into meaningful units, and create commits in Conventional Commits format. Use when the user wants to commit changes — e.g. \"commit\", \"コミット\", \"コミットして\", \"変更をコミット\"."
+version: "2026.06.14.1"
 source: "github.com/greendrop/agent-skills"
 ---
 
