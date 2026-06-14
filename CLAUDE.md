@@ -27,7 +27,7 @@ ghalint run
 
 ## SKILL.md の構造
 
-各スキルは `<skill-name>/SKILL.md` に配置する。先頭に YAML frontmatter が必須。
+各スキルは `<skill-name>/SKILL.md` に配置する。先頭に YAML frontmatter が必須。Agent Skills については [Agent Skills](https://agentskills.io/) を参照。
 
 ```markdown
 ---

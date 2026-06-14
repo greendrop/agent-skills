@@ -51,3 +51,7 @@ mise run skills:validate:one greendrop-git-conventional-commit/SKILL.md
 
 3. `mise run skills:validate` でローカル検証
 4. PR を作成 → main にマージされると自動でパブリッシュされる
+
+## 参考
+
+- [Agent Skills](https://agentskills.io/)
