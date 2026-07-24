@@ -1,5 +1,7 @@
 [settings]
 experimental = true
+lockfile = true
+minimum_release_age = "7d"
 
 [tools]
 actionlint = "1.7.12"
