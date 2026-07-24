@@ -5,7 +5,7 @@ minimum_release_age = "7d"
 
 [tools]
 actionlint = "1.7.12"
-betterleaks = "1.4.1"
+betterleaks = "v1.6.1"
 gh = "2.96.0"
 ghalint = "1.5.6"
 lefthook = "2.1.9"
