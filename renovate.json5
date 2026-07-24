@@ -15,6 +15,13 @@
   schedule: [
     "* 9 * * *",
   ],
+  // GitHub ネイティブ auto-merge は使わず、Renovate 主導で自動マージする
+  // （必須チェックが無く allow_auto_merge も無効のため）
+  platformAutomerge: false,
+  // automerge は schedule(9時台) に縛らず、CI 緑になり次第 Mend の次回稼働で実行
+  automergeSchedule: [
+    "at any time",
+  ],
   // 全 PR 共通のラベル
   labels: [
     "dependencies",
@@ -35,6 +42,12 @@
       // mise 管理ツールの更新 PR には mise ラベルを付与
       matchManagers: ["mise"],
       addLabels: ["mise"],
+    },
+    {
+      // github-actions / mise の minor 以下の更新は CI 通過後に自動マージ
+      matchManagers: ["github-actions", "mise"],
+      matchUpdateTypes: ["minor", "patch", "digest", "pin"],
+      automerge: true,
     },
   ],
   rebaseWhen: "never",
