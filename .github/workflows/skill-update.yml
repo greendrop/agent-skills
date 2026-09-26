@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update:
+  skill-update:
     runs-on: ubuntu-slim
     timeout-minutes: 10
     permissions:
