@@ -57,6 +57,7 @@ source: "github.com/greendrop/agent-skills"
 | `yaml-lint`           | PR（YAML ファイル変更時）          | YAML lint（yamlfmt）                       |
 | `github-actions-lint` | PR（ワークフロー変更時）           | actionlint + ghalint                       |
 | `secret-scan`         | PR                                 | betterleaks で差分コミットから秘密情報を検出 |
+| `renovate-config-validate` | PR（Renovate 設定変更時）      | renovate-config-validator で `renovate.json5` を検証 |
 
 ## スキルの追加・更新手順
 

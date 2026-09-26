@@ -1,0 +1,33 @@
+---
+# renovate-config-validator を使って Renovate の設定ファイルを検証する
+#
+# - https://docs.renovatebot.com/config-validation/
+# - https://github.com/suzuki-shunsuke/github-action-renovate-config-validator
+name: Renovate Config Validate
+
+on:
+  pull_request:
+    paths:
+      - renovate.json5
+      - .github/workflows/renovate-config-validate.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate Renovate config
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@b850926b611b1f3d3fe3729776339c217834bf2c # v2.2.0
+        with:
+          config_file_path: renovate.json5
