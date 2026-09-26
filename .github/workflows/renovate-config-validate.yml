@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
+  renovate-config-validate:
     runs-on: ubuntu-slim
     timeout-minutes: 10
     permissions:

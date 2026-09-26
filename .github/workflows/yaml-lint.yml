@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  yaml-lint:
     runs-on: ubuntu-slim
     timeout-minutes: 10
     permissions:
