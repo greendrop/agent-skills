@@ -1,54 +1,34 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: [
-    "config:recommended",
-  ],
-  // 更新対象とするパッケージマネージャ
-  enabledManagers: [
-    "github-actions",
-    "mise",
-  ],
-  // リリースから一定期間が経過するまで更新 PR を作成しない
+  // 推奨プリセットをベースに使用
+  extends: ["config:recommended"],
+  // 有効化するパッケージマネージャ
+  enabledManagers: ["github-actions", "mise"],
+  // リリースから7日経過したバージョンのみ対象
   minimumReleaseAge: "7 days",
   timezone: "Asia/Tokyo",
-  // 毎日 9 時（JST）に実行
-  schedule: [
-    "* 9 * * *",
-  ],
-  // GitHub ネイティブ auto-merge は使わず、Renovate 主導で自動マージする
-  // （必須チェックが無く allow_auto_merge も無効のため）
-  platformAutomerge: false,
-  // automerge は schedule(9時台) に縛らず、CI 緑になり次第 Mend の次回稼働で実行
-  automergeSchedule: [
-    "at any time",
-  ],
-  // 全 PR 共通のラベル
-  labels: [
-    "dependencies",
-  ],
-  "github-actions": {
-    enabled: true,
-  },
-  mise: {
-    enabled: true,
-  },
+  // 毎日9時台に実行
+  schedule: ["* 9 * * *"],
+  // 全 PR 共通ラベル
+  labels: ["dependencies"],
+  rebaseWhen: "never",
   packageRules: [
+    // GitHub Actions
     {
-      // GitHub Actions の更新 PR には github-actions ラベルを付与
       matchManagers: ["github-actions"],
       addLabels: ["github-actions"],
     },
+    // mise
     {
-      // mise 管理ツールの更新 PR には mise ラベルを付与
       matchManagers: ["mise"],
       addLabels: ["mise"],
     },
     {
-      // github-actions / mise の minor 以下の更新は CI 通過後に自動マージ
       matchManagers: ["github-actions", "mise"],
-      matchUpdateTypes: ["minor", "patch", "digest", "pin"],
+      // minor / patch は CI 通過後に GitHub の自動マージ機能でマージする
+      matchUpdateTypes: ["minor", "patch"],
       automerge: true,
+      platformAutomerge: true,
     },
   ],
-  rebaseWhen: "never",
 }
