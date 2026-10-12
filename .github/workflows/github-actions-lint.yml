@@ -27,13 +27,6 @@ jobs:
       - name: Setup Mise
         uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
 
-      - name: Run actionlint
-        run: actionlint -color
-
-      - name: Run ghalint
-        run: ghalint run
-
-      - name: Run zizmor
-        run: zizmor --gh-token "$GH_TOKEN" .
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # actionlint・ghalint・zizmor は mise.toml / mise.lock のバージョンを使う
+      - name: Run github-actions-lint
+        uses: greendrop/gha-workflows/actions/github-actions-lint@a589293c1b96f7d63c05ee5934289e382730146c # v0.2.0
