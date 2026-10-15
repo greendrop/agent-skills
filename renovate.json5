@@ -1,28 +1,11 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  // 推奨プリセットをベースに使用
-  extends: ["config:recommended"],
+  // 個人リポジトリ共通の設定を継承（config:recommended・minimumReleaseAge・schedule・ラベルなど）
+  // https://github.com/greendrop/renovate-config
+  extends: ["github>greendrop/renovate-config:default.json5"],
   // 有効化するパッケージマネージャ
   enabledManagers: ["github-actions", "mise"],
-  // リリースから7日経過したバージョンのみ対象
-  minimumReleaseAge: "7 days",
-  timezone: "Asia/Tokyo",
-  // 毎日9時台に実行
-  schedule: ["* 9 * * *"],
-  // 全 PR 共通ラベル
-  labels: ["dependencies"],
-  rebaseWhen: "never",
   packageRules: [
-    // GitHub Actions
-    {
-      matchManagers: ["github-actions"],
-      addLabels: ["github-actions"],
-    },
-    // mise
-    {
-      matchManagers: ["mise"],
-      addLabels: ["mise"],
-    },
     {
       matchManagers: ["github-actions", "mise"],
       // minor / patch は CI 通過後に GitHub の自動マージ機能でマージする
