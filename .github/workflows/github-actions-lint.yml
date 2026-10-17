@@ -29,4 +29,4 @@ jobs:
 
       # actionlint・ghalint・zizmor は mise.toml / mise.lock のバージョンを使う
       - name: Run github-actions-lint
-        uses: greendrop/gha-workflows/actions/github-actions-lint@a589293c1b96f7d63c05ee5934289e382730146c # v0.2.0
+        uses: greendrop/gha-workflows/actions/github-actions-lint@ba92f5c1af2372b47d44d1ef6076488afd846c87 # v0.4.0
